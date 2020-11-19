@@ -1,0 +1,14 @@
+{
+  "name": "Open Google :site Search",
+  "short_name": "Search by :site",
+  "description": "Open in a new tab Google search with the prefix :site",
+  "version": "1.0.0",
+  "manifest_version": 2,
+  "browser_action": {
+    "default_title": "Open :site search",
+    "default_popup": "popup.html"
+  },
+  "permissions": [
+    "tabs"
+  ]
+}
