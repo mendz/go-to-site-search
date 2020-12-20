@@ -21,15 +21,12 @@
       <h1 class="main-title">Open Google :site Search</h1>
     </header>
     <main>
+      <div class="buttons-wrapper">
+        <button id="add-inputs" type="button">➕</button>
+        <button id="remove-inputs" type="button" disabled>➖</button>
+      </div>
       <form>
-        <label for="domain-site">
-          Domain/Site
-          <input type="text" name="domain-site" id="domainSite" placeholder="Enter domain or site name" required/>
-        </label>
-        <label for="query" class="input-wrapper">
-          Query
-          <input type="text" name="query" id="query" placeholder="Enter extra query (optional)"/>
-        </label>
+        <div class="input-wrapper"></div>
         <button type="submit">Open Search</button>
       </form>
     </main>
