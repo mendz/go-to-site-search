@@ -19,6 +19,8 @@ Will open 3 tabs with the searches:
 2. `site:github.com microsoft`
 3. `site:github.com google`
 
+![screenshot](./images/screenshot.png)
+
 ---
 
 Search SVG icon is from: https://heroicons.dev/.
