@@ -21,16 +21,24 @@
       <h1 class="main-title">Open Google :site Search</h1>
     </header>
     <main>
-      <details>
-        <summary>Open in an incognito window</summary>
-        <p>In order to open the tabs in an incognito window, you should:</p>
-        <ul>
-          <li>Right-click the extension icon</li>
-          <li>Click <strong>Manage extensions</strong></li>
-          <li>Toggle the <strong>Allow in incognito</strong> option</li>
-          <li>Use the extension in an incognito mode</li>
-        </ul>
-      </details>
+      <div class="incognito-wrapper">
+        <button type="button">Open new incognito window</button>
+        <p>
+          In order to show the search results in incognito window you need open
+          at least one
+        </p>
+        <label for="incognitoCheck" class="disabled">
+          Results in incognito window
+          <input
+            type="checkbox"
+            name="incognito-check"
+            id="incognitoCheck"
+            placeholder="Enter domain or site name"
+            value="incognito"
+            disabled
+          />
+        </label>
+      </div>
       <form>
         <label for="domain-site">
           Domain/Site
