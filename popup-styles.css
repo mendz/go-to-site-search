@@ -4,6 +4,7 @@
   --small-box-shadow: rgba(0, 0, 0, 0.3);
   --medium-box-shadow: rgba(0, 0, 0, 0.3);
   --large-box-shadow: rgba(0, 0, 0, 0.16);
+  --min-width: 240px;
 }
 
 html {
@@ -41,7 +42,7 @@ header h1 {
 
 main {
   max-height: 100%;
-  min-width: 210px;
+  min-width: var(--min-width);
   margin: 1rem;
   margin-top: 0;
 }
@@ -56,13 +57,13 @@ form > * {
   margin-bottom: 0.2rem;
 }
 
-label {
+form label {
   display: flex;
   flex-direction: column;
   padding-bottom: 5px;
 }
 
-input {
+input[type="text"] {
   margin-right: 10%;
   padding-bottom: 50px;
   line-height: 1.5;
@@ -71,15 +72,22 @@ input {
   box-shadow: 0 2px 4px 0 var(--medium-box-shadow);
   padding: 0.5em 1em 0.5em 0.5em;
   border-radius: 10px;
+  width: 100%;
 }
 
-input::placeholder {
+input[type="text"]::placeholder {
   color: #97a1ad;
 }
 
-input:focus {
+input[type="text"]:focus {
   outline: none;
   box-shadow: 0 4px 10px 0 var(--large-box-shadow);
+}
+
+details {
+  margin: 0.5rem;
+  cursor: pointer;
+  user-select: none;
 }
 
 button {
@@ -87,4 +95,11 @@ button {
   box-shadow: 0 2px 4px 0 var(--medium-box-shadow);
   background-color: var(--white);
   cursor: pointer;
+}
+
+textarea {
+  min-width: var(--min-width);
+  max-width: 765px;
+  min-height: 170px;
+  max-height: 375px;
 }

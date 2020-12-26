@@ -21,12 +21,37 @@
       <h1 class="main-title">Open Google :site Search</h1>
     </header>
     <main>
-      <div class="buttons-wrapper">
-        <button id="add-inputs" type="button">➕</button>
-        <button id="remove-inputs" type="button" disabled>➖</button>
-      </div>
+      <details>
+        <summary>Open in an incognito window</summary>
+        <p>In order to open the tabs in an incognito window, you should:</p>
+        <ul>
+          <li>Right-click the extension icon</li>
+          <li>Click <strong>Manage extensions</strong></li>
+          <li>Toggle the <strong>Allow in incognito</strong> option</li>
+          <li>Use the extension in an incognito mode</li>
+        </ul>
+      </details>
       <form>
-        <div class="input-wrapper"></div>
+        <label for="domain-site">
+          Domain/Site
+          <input
+            type="text"
+            name="domain-site"
+            id="domainSite"
+            placeholder="Enter domain or site name"
+            required
+          />
+        </label>
+        <label for="query" class="input-wrapper">
+          Queries
+          <textarea
+            name="queries"
+            id="queries"
+            cols="30"
+            rows="10"
+            placeholder="Optional - Enter extra queries, split by new line"
+          ></textarea>
+        </label>
         <button type="submit">Open Search</button>
       </form>
     </main>
