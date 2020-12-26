@@ -1,7 +1,7 @@
 {
   "name": "Open Google :site Search",
   "short_name": "Search by :site",
-  "description": "Open in a new tabs Google search with the prefix :site and optional queries",
+  "description": "Open new tabs of Google searches with the prefix :site in addition you can add extra queries for the search.",
   "version": "1.0.0",
   "manifest_version": 2,
   "browser_action": {
