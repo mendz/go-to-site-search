@@ -1,6 +1,10 @@
 {
   "extends": ["wesbos"],
   "rules": {
-    "import/no-extraneous-dependencies": ["error", {"devDependencies": ["scripts/**"]}]
+    "import/no-extraneous-dependencies": [
+      "error",
+      { "devDependencies": ["scripts/**"] }
+    ],
+    "prettier/prettier": 1
   }
 }

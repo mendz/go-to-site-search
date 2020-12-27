@@ -3,8 +3,13 @@ const AdmZip = require('adm-zip');
 
 const zip = new AdmZip();
 
-const files = ['manifest.json', 'popup.js', 'popup.html', 'popup-styles.css'];
-const folders = ['./icons'];
+const files = [
+  'src/manifest.json',
+  'src/popup.js',
+  'src/popup.html',
+  'src/popup-styles.css',
+];
+const folders = ['src/icons'];
 const destZipPath = './build/go-to-site-search.zip';
 
 if (fs.existsSync(destZipPath)) {
