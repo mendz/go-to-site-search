@@ -39,6 +39,7 @@
             name="domain-site"
             id="domainSite"
             placeholder="Enter domain or site name"
+            data-name="domain"
             required
           />
         </label>
@@ -47,11 +48,13 @@
           <textarea
             name="queries"
             id="queries"
+            data-name="queries"
             cols="30"
             rows="10"
             placeholder="Optional - Enter extra queries, split by new line"
           ></textarea>
         </label>
+        <button type="button" id="clear">Clear</button>
         <button type="submit">Open Search</button>
       </form>
     </main>
