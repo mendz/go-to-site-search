@@ -29,6 +29,10 @@ body {
   font-family: "Gudea", sans-serif;
 }
 
+h3 {
+  margin-top: 0;
+}
+
 header {
   background-color: var(--white);
   box-shadow: 1px 2px 3px var(--small-box-shadow);
@@ -45,6 +49,18 @@ main {
   min-width: var(--min-width);
   margin: 1rem;
   margin-top: 0;
+  display: flex;
+}
+
+.settings-container {
+  margin-right: 20px;
+  min-width: 215px;
+  border-right: 1px solid rgba(0, 0, 0, 0.25);
+}
+
+.radio-container {
+  margin-top: 0.5rem;
+  display: flex;
 }
 
 form {
@@ -84,13 +100,27 @@ input[type="text"]:focus {
   box-shadow: 0 4px 10px 0 var(--large-box-shadow);
 }
 
+.settings-container label,
+input[type="radio"] {
+  cursor: pointer;
+}
+
+.settings-container label.disabled,
+input[type="radio"]:disabled,
+input[type="checkbox"]:disabled {
+  cursor: not-allowed;
+}
+
+.settings-container .radio-container label:not(:first-child) {
+  margin-left: 1rem;
+}
+
 details {
   margin: 0.5rem;
 }
 
 details summary {
   cursor: pointer;
-  user-select: none;
 }
 
 button {
@@ -105,4 +135,9 @@ textarea {
   max-width: 765px;
   min-height: 170px;
   max-height: 375px;
+}
+
+details summary,
+.settings-container label {
+  user-select: none;
 }

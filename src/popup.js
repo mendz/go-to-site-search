@@ -1,5 +1,10 @@
 /* global chrome */
 
+const newTypes = {
+  NEW_TAB: 'newTab',
+  NEW_WINDOW: 'newWindow',
+};
+
 /**
  * @param {string} site
  */
@@ -23,16 +28,63 @@ function getUrl(site, query) {
 }
 
 /**
+ *
  * @param {string} site
  * @param {string[]} queries
  */
-function openTabs(site, queries) {
+function openSearchesNewTabs(site, queries) {
   queries.forEach((query) => {
     chrome.tabs.create({
       url: getUrl(site, query),
       active: true,
     });
   });
+}
+
+/**
+ *
+ * @param {string} site
+ * @param {string[]} queries
+ * @param {boolean} isIncognito
+ */
+function openSearchesNewWindow(site, queries, isIncognito) {
+  chrome.windows.create(
+    {
+      focused: true,
+      width: 840,
+      incognito: isIncognito,
+    },
+    (window) => {
+      const { id } = window;
+      queries.forEach((query) => {
+        chrome.tabs.create({
+          windowId: id,
+          url: getUrl(site, query),
+          active: true,
+        });
+      });
+      chrome.windows.get(id, { populate: true }, (windowWithTabs) => {
+        chrome.tabs.remove(windowWithTabs.tabs[0].id);
+      });
+    }
+  );
+}
+
+/**
+ * @param {string} site
+ * @param {string[]} queries
+ * @param {string} newType
+ */
+function openSearches(site, queries, newType) {
+  const isIncognito = document.querySelector(
+    'input[type="checkbox"]#incognito-check'
+  ).checked;
+  if (newType === newTypes.NEW_TAB && !isIncognito) {
+    openSearchesNewTabs(site, queries);
+  }
+  if (newType === newTypes.NEW_WINDOW || isIncognito) {
+    openSearchesNewWindow(site, queries, isIncognito);
+  }
 }
 
 /**
@@ -43,7 +95,12 @@ function search(event) {
   const site = event.target.elements.domainSite.value;
   const queriesString = event.target.elements.queries.value?.trim() ?? '';
   const queries = queriesString.length ? queriesString.split('\n') : [''];
-  openTabs(site, queries);
+  const newType = [
+    ...document.querySelectorAll(
+      '.settings-container input[type="radio"][name="new-window-tab"]'
+    ),
+  ].find((radio) => radio.checked);
+  openSearches(site, queries, newType.value);
 }
 
 /**
@@ -104,11 +161,48 @@ function saveInputsValue() {
   });
 }
 
+/**
+ *
+ * @param {InputEvent} event
+ */
+function onIncognitoChange(event) {
+  const { target } = event;
+  const newTab = document.querySelector(
+    '.settings-container input[type="radio"][name="new-window-tab"]#new-tab'
+  );
+  const newWindow = document.querySelector(
+    '.settings-container input[type="radio"][name="new-window-tab"]#new-window'
+  );
+  if (target.checked) {
+    newTab.disabled = true;
+    newTab.parentElement.classList.toggle('disabled');
+    newWindow.checked = true;
+  } else {
+    newTab.disabled = false;
+    newTab.parentElement.classList.toggle('disabled');
+  }
+}
+
 document.addEventListener('DOMContentLoaded', () => {
+  chrome.extension.isAllowedIncognitoAccess((isAllowedAccess) => {
+    const incognitoCheck = document.querySelector(
+      'input[type="checkbox"]#incognito-check'
+    );
+    if (isAllowedAccess) {
+      incognitoCheck.disabled = false;
+      incognitoCheck.parentElement.classList.remove('disabled');
+    } else {
+      incognitoCheck.disabled = true;
+      incognitoCheck.parentElement.classList.add('disabled');
+    }
+  });
   document.querySelector('form').addEventListener('submit', search);
   document.querySelector('button#clear').addEventListener('click', clearInputs);
   document
     .querySelector('#domainSite')
     .addEventListener('input', handleDomainChange);
+  document
+    .querySelector('#incognito-check')
+    .addEventListener('change', onIncognitoChange);
   saveInputsValue();
 });

@@ -21,42 +21,72 @@
       <h1 class="main-title">Open Google :site Search</h1>
     </header>
     <main>
-      <details>
-        <summary>Open in an incognito window</summary>
-        <p>In order to open the tabs in an incognito window, you should:</p>
-        <ul>
-          <li>Right-click the extension icon.</li>
-          <li>Click <strong>Manage extensions</strong>.</li>
-          <li>Toggle the <strong>Allow in incognito</strong> option.</li>
-          <li>Use the extension in an incognito window.</li>
-        </ul>
-      </details>
-      <form>
-        <label for="domain-site">
-          Domain/Site
-          <input
-            type="text"
-            name="domain-site"
-            id="domainSite"
-            placeholder="Enter domain or site name"
-            data-name="domain"
-            required
-          />
+      <div class="settings-container">
+        <h3>Settings</h3>
+        <label for="incognito-check">
+          <input type="checkbox" id="incognito-check" name="incognito-check" />
+          Incognito
         </label>
-        <label for="query" class="input-wrapper">
-          Queries
-          <textarea
-            name="queries"
-            id="queries"
-            data-name="queries"
-            cols="30"
-            rows="10"
-            placeholder="Optional - Enter extra queries, split by new line"
-          ></textarea>
-        </label>
-        <button type="button" id="clear">Clear</button>
-        <button type="submit">Open Search</button>
-      </form>
+        <details>
+          <summary>Open in an incognito window</summary>
+          <p>In order to open the tabs in an incognito window, you should:</p>
+          <ul>
+            <li>Right-click the extension icon.</li>
+            <li>Click <strong>Manage extensions</strong>.</li>
+            <li>Toggle the <strong>Allow in incognito</strong> option.</li>
+          </ul>
+        </details>
+        <hr />
+        <div class="radio-container">
+          <label for="new-tab">
+            <input
+              type="radio"
+              id="new-tab"
+              name="new-window-tab"
+              value="newTab"
+              checked
+            />
+            New Tab
+          </label>
+          <label for="new-window">
+            <input
+              type="radio"
+              id="new-window"
+              name="new-window-tab"
+              value="newWindow"
+            />
+            New Window
+          </label>
+        </div>
+      </div>
+      <div class="search-container">
+        <form>
+          <label for="domain-site">
+            Domain/Site
+            <input
+              type="text"
+              name="domain-site"
+              id="domainSite"
+              placeholder="Enter domain or site name"
+              data-name="domain"
+              required
+            />
+          </label>
+          <label for="query" class="input-wrapper">
+            Queries
+            <textarea
+              name="queries"
+              id="queries"
+              data-name="queries"
+              cols="30"
+              rows="10"
+              placeholder="Optional - Enter extra queries, split by new line"
+            ></textarea>
+          </label>
+          <button type="button" id="clear">Clear</button>
+          <button type="submit">Open Search</button>
+        </form>
+      </div>
     </main>
     <script type="module" src="popup.js"></script>
   </body>
