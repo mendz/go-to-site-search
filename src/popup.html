@@ -24,7 +24,12 @@
       <div class="settings-container">
         <h3>Settings</h3>
         <label for="incognito-check">
-          <input type="checkbox" id="incognito-check" name="incognito-check" />
+          <input
+            type="checkbox"
+            id="incognito-check"
+            name="incognito-check"
+            data-name="incognitoCheck"
+          />
           Incognito
         </label>
         <details class="incognito-details">
@@ -43,7 +48,8 @@
               type="radio"
               id="new-tab"
               name="new-window-tab"
-              value="newTab"
+              value="new-tab"
+              data-name="new-tab"
               checked
             />
             New Tab
@@ -53,7 +59,8 @@
               type="radio"
               id="new-window"
               name="new-window-tab"
-              value="newWindow"
+              data-name="new-window"
+              value="new-window"
             />
             New Window
           </label>
@@ -66,9 +73,9 @@
             <input
               type="text"
               name="domain-site"
-              id="domainSite"
+              id="domain-site"
               placeholder="Enter domain or site name"
-              data-name="domain"
+              data-name="domain-site"
               required
             />
           </label>
