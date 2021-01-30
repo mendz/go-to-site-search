@@ -188,12 +188,17 @@ document.addEventListener('DOMContentLoaded', () => {
     const incognitoCheck = document.querySelector(
       'input[type="checkbox"]#incognito-check'
     );
+    const incognitoDetails = document.querySelector(
+      'details.incognito-details'
+    );
     if (isAllowedAccess) {
       incognitoCheck.disabled = false;
       incognitoCheck.parentElement.classList.remove('disabled');
+      incognitoDetails.classList.add('hide');
     } else {
       incognitoCheck.disabled = true;
       incognitoCheck.parentElement.classList.add('disabled');
+      incognitoDetails.classList.remove('hide');
     }
   });
   document.querySelector('form').addEventListener('submit', search);
