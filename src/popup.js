@@ -128,62 +128,55 @@ function handleDomainChange(event) {
  * @param {InputEvent} event
  */
 function handleSaveInputValues(event) {
-  const { dataset, type } = event.target;
+  const { dataset, type, name } = event.target;
   let { value } = event.target;
+  const otherValue = {
+    dataName: null,
+    value: null,
+  };
+  // handle the values
   if (INPUT_WITH_BOOLEAN_VALUES.includes(type)) {
     value = event.target.checked;
   } else if (dataset.name === 'domain' && type === 'text') {
     value = trimDomain(value);
   }
-  // todo: need to handle the radio buttons, while one is true that others need to be false
-  chrome.storage.sync.set({ [dataset.name]: value }, () => {
+  if (name === 'new-window-tab') {
+    otherValue.dataName =
+      dataset.name === DATA_NAMES.NEW_TAB
+        ? DATA_NAMES.NEW_WINDOW
+        : DATA_NAMES.NEW_TAB;
+    otherValue.value = !value;
+  }
+  const values = { [dataset.name]: value };
+  if (otherValue.dataName !== null) {
+    values[otherValue.dataName] = otherValue.value;
+  }
+  // save the values
+  chrome.storage.sync.set(values, () => {
     const error = chrome.runtime.lastError;
     if (error) {
       console.error(error);
     } else {
-      console.log(`saved - (${dataset.name}) with: (${value})`);
+      console.info(`saved - (${dataset.name}) with: (${value})`);
     }
   });
 }
 
-// todo: change clear to only handle the inputs not all values
 function clearInputs() {
   document.querySelector(`#${DATA_NAMES.DOMAIN_SITE}`).value = '';
   document.querySelector(`#${DATA_NAMES.QUERIES}`).value = '';
-  chrome.storage.sync.clear(() => {
-    const error = chrome.runtime.lastError;
-    if (error) {
-      console.error(error);
-    }
-  });
-}
-
-function saveInputsValue() {
-  // save inputs on chrome storage
-  console.log('values', Object.values(DATA_NAMES));
-  Object.values(DATA_NAMES).forEach((dataName) => {
-    document
-      .querySelector(`#${dataName}`)
-      .addEventListener('input', handleSaveInputValues);
-  });
-  chrome.storage.sync.get(Object.values(DATA_NAMES), (result) => {
-    const error = chrome.runtime.lastError;
-    if (error) {
-      console.error(error);
-      return;
-    }
-    console.log({ result });
-    Object.values(DATA_NAMES).forEach((dataName) => {
-      const input = document.querySelector(`#${dataName}`);
-      if (INPUT_WITH_BOOLEAN_VALUES.includes(input.type)) {
-        input.checked = result[dataName] ?? false;
+  chrome.storage.sync.set(
+    { [DATA_NAMES.DOMAIN_SITE]: null, [DATA_NAMES.QUERIES]: null },
+    () => {
+      const error = chrome.runtime.lastError;
+      if (error) {
+        console.error(error);
       } else {
-        input.value = result[dataName] ?? '';
+        console.info(`clear form storage inputs`);
       }
-    });
-  });
+    }
+  );
 }
-window.saveInputsValue = saveInputsValue;
 
 /**
  *
@@ -199,12 +192,44 @@ function onIncognitoChange(event) {
   );
   if (target.checked) {
     newTab.disabled = true;
-    newTab.parentElement.classList.toggle('disabled');
+    newTab.parentElement.classList.add('disabled');
     newWindow.checked = true;
   } else {
     newTab.disabled = false;
-    newTab.parentElement.classList.toggle('disabled');
+    newTab.parentElement.classList.remove('disabled');
   }
+}
+
+function disableInputs() {
+  const incognitoCheck = document.querySelector(
+    'input[type="checkbox"]#incognito-check'
+  );
+  onIncognitoChange({ target: { checked: incognitoCheck.checked } });
+}
+
+function saveInputsValue() {
+  // save inputs on chrome storage
+  Object.values(DATA_NAMES).forEach((dataName) => {
+    document
+      .querySelector(`#${dataName}`)
+      .addEventListener('input', handleSaveInputValues);
+  });
+  chrome.storage.sync.get(Object.values(DATA_NAMES), (result) => {
+    const error = chrome.runtime.lastError;
+    if (error) {
+      console.error(error);
+      return;
+    }
+    Object.values(DATA_NAMES).forEach((dataName) => {
+      const input = document.querySelector(`#${dataName}`);
+      if (INPUT_WITH_BOOLEAN_VALUES.includes(input.type)) {
+        input.checked = result[dataName] ?? false;
+      } else {
+        input.value = result[dataName] ?? '';
+      }
+    });
+    disableInputs();
+  });
 }
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -227,8 +252,6 @@ document.addEventListener('DOMContentLoaded', () => {
   });
   document.querySelector('form').addEventListener('submit', search);
   document.querySelector('button#clear').addEventListener('click', clearInputs);
-  // todo: remove all logs!
-  console.log('name', DATA_NAMES.DOMAIN_SITE, DATA_NAMES);
   document
     .querySelector(`#${DATA_NAMES.DOMAIN_SITE}`)
     .addEventListener('input', handleDomainChange);
