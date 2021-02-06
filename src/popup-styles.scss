@@ -1,3 +1,7 @@
+@mixin unselect {
+  user-select: none;
+}
+
 :root {
   --white: #f5f5f5;
   --dark-gray: rgba(255, 255, 255, 0.2);
@@ -12,7 +16,6 @@ html {
   -moz-box-sizing: border-box;
   box-sizing: border-box;
 }
-
 *,
 *:before,
 *:after {
@@ -31,6 +34,7 @@ body {
 }
 
 /* elements */
+
 h3 {
   margin-top: 0;
 }
@@ -40,10 +44,10 @@ header {
   box-shadow: 1px 2px 3px var(--small-box-shadow);
   text-align: center;
   border-radius: 2px;
-}
-header h1 {
-  margin-top: 0;
-  padding: 0.4rem 0;
+  h1 {
+    margin-top: 0;
+    padding: 0.4rem 0;
+  }
 }
 
 main {
@@ -72,36 +76,46 @@ hr {
   margin: 1rem 0;
   border: 0;
   height: 1px;
-  background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));
+  background-image: linear-gradient(
+    to right,
+    rgba(0, 0, 0, 0),
+    rgba(0, 0, 0, 0.75),
+    rgba(0, 0, 0, 0)
+  );
 }
 
 details {
   margin: 0.5rem;
-}
-details.incognito-details--hidden {
-  display: none;
-}
-details summary {
-  user-select: none;
-  cursor: pointer;
+
+  &.incognito-details--hidden {
+    display: none;
+  }
+
+  summary {
+    @include unselect;
+    cursor: pointer;
+  }
 }
 
 /* form & inputs */
+
 form {
   display: flex;
   flex-direction: column;
-}
-form > * {
-  flex: 1;
-  margin-bottom: 0.2rem;
-}
-form label {
-  display: flex;
-  flex-direction: column;
-  padding-bottom: 5px;
+
+  > * {
+    flex: 1;
+    margin-bottom: 0.2rem;
+  }
+
+  label {
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 5px;
+  }
 }
 
-input[type=text] {
+input[type="text"] {
   margin-right: 10%;
   padding-bottom: 50px;
   line-height: 1.5;
@@ -111,13 +125,13 @@ input[type=text] {
   padding: 0.5em 1em 0.5em 0.5em;
   border-radius: 10px;
   width: 100%;
-}
-input[type=text]::placeholder {
-  color: #97a1ad;
-}
-input[type=text]:focus {
-  outline: none;
-  box-shadow: 0 4px 10px 0 var(--large-box-shadow);
+  &::placeholder {
+    color: #97a1ad;
+  }
+  &:focus {
+    outline: none;
+    box-shadow: 0 4px 10px 0 var(--large-box-shadow);
+  }
 }
 
 /* containers */
@@ -126,32 +140,40 @@ input[type=text]:focus {
   min-width: 215px;
   position: relative;
   padding-right: 15px;
-}
-.settings-container:after {
-  content: "";
-  position: absolute;
-  right: 0;
-  z-index: 100;
-  top: 5%;
-  width: 0.2rem;
-  height: 85%;
-  background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));
-}
-.settings-container label,
-.settings-container input[type=radio] {
-  user-select: none;
-  cursor: pointer;
-}
-.settings-container label.disabled,
-.settings-container input[type=radio]:disabled,
-.settings-container input[type=checkbox]:disabled {
-  cursor: not-allowed;
+  &:after {
+    content: "";
+    position: absolute;
+    right: 0;
+    z-index: 100;
+    top: 5%;
+    width: 0.2rem;
+    height: 85%;
+    background-image: linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0),
+      rgba(0, 0, 0, 0.75),
+      rgba(0, 0, 0, 0)
+    );
+  }
+
+  label,
+  input[type="radio"] {
+    @include unselect;
+    cursor: pointer;
+  }
+
+  label.disabled,
+  input[type="radio"]:disabled,
+  input[type="checkbox"]:disabled {
+    cursor: not-allowed;
+  }
 }
 
 .radio-container {
   margin-top: 0.5rem;
   display: flex;
-}
-.radio-container label:not(:first-child) {
-  margin-left: 1rem;
+
+  label:not(:first-child) {
+    margin-left: 1rem;
+  }
 }

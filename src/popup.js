@@ -14,6 +14,8 @@ const DATA_NAMES = {
 
 const INPUT_WITH_BOOLEAN_VALUES = ['radio', 'checkbox'];
 
+let IS_INCOGNITO_ALLOWED_ACCESS = false;
+
 /**
  * @param {string} site
  */
@@ -224,6 +226,12 @@ function saveInputsValue() {
       const input = document.querySelector(`#${dataName}`);
       if (INPUT_WITH_BOOLEAN_VALUES.includes(input.type)) {
         input.checked = result[dataName] ?? false;
+        if (
+          dataName === DATA_NAMES.INCOGNITO_CHECK &&
+          !IS_INCOGNITO_ALLOWED_ACCESS
+        ) {
+          input.checked = false;
+        }
       } else {
         input.value = result[dataName] ?? '';
       }
@@ -234,6 +242,7 @@ function saveInputsValue() {
 
 document.addEventListener('DOMContentLoaded', () => {
   chrome.extension.isAllowedIncognitoAccess((isAllowedAccess) => {
+    IS_INCOGNITO_ALLOWED_ACCESS = isAllowedAccess;
     const incognitoCheck = document.querySelector(
       'input[type="checkbox"]#incognito-check'
     );
@@ -243,11 +252,12 @@ document.addEventListener('DOMContentLoaded', () => {
     if (isAllowedAccess) {
       incognitoCheck.disabled = false;
       incognitoCheck.parentElement.classList.remove('disabled');
-      incognitoDetails.classList.add('hide');
+      incognitoDetails.classList.add('incognito-details--hidden');
     } else {
       incognitoCheck.disabled = true;
+      incognitoCheck.checked = false;
       incognitoCheck.parentElement.classList.add('disabled');
-      incognitoDetails.classList.remove('hide');
+      incognitoDetails.classList.remove('incognito-details--hidden');
     }
   });
   document.querySelector('form').addEventListener('submit', search);
