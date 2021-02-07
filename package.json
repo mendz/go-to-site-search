@@ -1,10 +1,11 @@
 {
   "name": "go-to-site-search",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "",
   "main": "popup.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "sass --watch --no-source-map src/popup-styles.scss src/popup-styles.css",
+    "build:css": "sass --no-source-map src/popup-styles.scss src/popup-styles.css",
     "build": "node ./scripts/build.js"
   },
   "repository": {
@@ -37,11 +38,14 @@
   },
   "lint-staged": {
     "*.js": "eslint --cache --fix",
-    "*.{js,css,html}": "prettier --write"
+    "*.{js,scss,html}": "prettier --write"
   },
   "husky": {
     "hooks": {
       "pre-commit": "lint-staged"
     }
+  },
+  "dependencies": {
+    "sass": "^1.32.6"
   }
 }
