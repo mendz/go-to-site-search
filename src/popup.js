@@ -88,7 +88,7 @@ function openSearchesNewWindow(site, queries, isIncognito) {
  */
 function openSearches(site, queries, newType) {
   const isIncognito = document.querySelector(
-    'input[type="checkbox"]#incognito-check'
+    `input[type="checkbox"]#${DATA_NAMES.INCOGNITO_CHECK}`
   ).checked;
   if (newType === newTypes.NEW_TAB && !isIncognito) {
     openSearchesNewTabs(site, queries);
@@ -187,10 +187,10 @@ function clearInputs() {
 function onIncognitoChange(event) {
   const { target } = event;
   const newTab = document.querySelector(
-    '.settings-container input[type="radio"][name="new-window-tab"]#new-tab'
+    `.settings-container input[type="radio"][name="new-window-tab"]#${DATA_NAMES.NEW_TAB}`
   );
   const newWindow = document.querySelector(
-    '.settings-container input[type="radio"][name="new-window-tab"]#new-window'
+    `.settings-container input[type="radio"][name="new-window-tab"]#${DATA_NAMES.NEW_WINDOW}`
   );
   if (target.checked) {
     newTab.disabled = true;
@@ -204,7 +204,7 @@ function onIncognitoChange(event) {
 
 function disableInputs() {
   const incognitoCheck = document.querySelector(
-    'input[type="checkbox"]#incognito-check'
+    `input[type="checkbox"]#${DATA_NAMES.INCOGNITO_CHECK}`
   );
   onIncognitoChange({ target: { checked: incognitoCheck.checked } });
 }
@@ -244,7 +244,7 @@ document.addEventListener('DOMContentLoaded', () => {
   chrome.extension.isAllowedIncognitoAccess((isAllowedAccess) => {
     IS_INCOGNITO_ALLOWED_ACCESS = isAllowedAccess;
     const incognitoCheck = document.querySelector(
-      'input[type="checkbox"]#incognito-check'
+      `input[type="checkbox"]#${DATA_NAMES.INCOGNITO_CHECK}`
     );
     const incognitoDetails = document.querySelector(
       'details.incognito-details'
