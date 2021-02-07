@@ -240,7 +240,7 @@ function saveInputsValue() {
   });
 }
 
-document.addEventListener('DOMContentLoaded', () => {
+function handledIncognitoAccess() {
   chrome.extension.isAllowedIncognitoAccess((isAllowedAccess) => {
     IS_INCOGNITO_ALLOWED_ACCESS = isAllowedAccess;
     const incognitoCheck = document.querySelector(
@@ -260,6 +260,9 @@ document.addEventListener('DOMContentLoaded', () => {
       incognitoDetails.classList.remove('incognito-details--hidden');
     }
   });
+}
+
+function addInitialEventListeners() {
   document.querySelector('form').addEventListener('submit', search);
   document.querySelector('button#clear').addEventListener('click', clearInputs);
   document
@@ -268,5 +271,10 @@ document.addEventListener('DOMContentLoaded', () => {
   document
     .querySelector(`#${DATA_NAMES.INCOGNITO_CHECK}`)
     .addEventListener('change', onIncognitoChange);
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  handledIncognitoAccess();
+  addInitialEventListeners();
   saveInputsValue();
 });
