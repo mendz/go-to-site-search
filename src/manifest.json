@@ -1,5 +1,4 @@
 {
-  "$schema": "https://json.schemastore.org/chrome-manifest",
   "name": "Open Google :site Search",
   "short_name": "Search by :site",
   "description": "Open new tabs of Google searches with the prefix :site in addition you can add extra queries for the search.",
