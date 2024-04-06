@@ -2,14 +2,13 @@
   "name": "Open Google :site Search",
   "short_name": "Search by :site",
   "description": "Open new tabs of Google searches with the prefix :site in addition you can add extra queries for the search.",
-  "version": "1.0.2",
-  "manifest_version": 2,
-  "browser_action": {
+  "version": "1.0.3",
+  "manifest_version": 3,
+  "action": {
     "default_title": "Open :site search",
     "default_popup": "popup.html"
   },
   "permissions": [
-    "tabs",
     "storage"
   ],
   "icons": {
